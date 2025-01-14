@@ -9,7 +9,6 @@ function App() {
     <div>
       <LinkList/>
       <div>
-        <h1>Danh sách công việc</h1>
         <AddToList />
       </div>
     </div>

@@ -1,32 +1,37 @@
 import React, { useState } from 'react';
+import { Button, TextField, Box } from '@mui/material';
 
-const AddTodo = ({ addTodo }) => {
+const AddTodo = ({ addtodo, id }) => {
   const [text, setText] = useState('');
-
 
   const handleAddClick = () => {
     if (text.trim() !== '') {
-      addTodo(text);
+      addtodo(text, id);
       setText('');
     }
   };
 
   return (
-    <div className="input-group">
-      <input
-        type="text"
-        placeholder="Nhập công việc"
+    <Box display="flex" alignItems="center" gap={2}>
+      <TextField
+        label="Enter task"
+        variant="outlined"
         value={text}
-        onKeyDown={(e)=>{
-            if(e.key === 'Enter')
-                handleAddClick();
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') handleAddClick();
         }}
         onChange={(e) => setText(e.target.value)}
+        fullWidth
       />
-      <button onClick={handleAddClick} disabled={text.trim() === ''}>
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={handleAddClick}
+        disabled={text.trim() === ''}
+      >
         Add
-      </button>
-    </div>
+      </Button>
+    </Box>
   );
 };
 

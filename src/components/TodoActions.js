@@ -1,22 +1,34 @@
+import { useDispatch } from "react-redux";
+import { sortDecsStatusTodoListReducers, sortDecsTodoListReducers, sortIncStatusTodoListReducers, sortIncTodoListReducers } from "../features/todo/todoSlice";
 
-const TodoActions = ({ deleteSelectedItems,selectedItem,todoList,setTodoList }) => {
+const TodoActions = ({ deleteSelectedItems, selectedItem, categoryId }) => {
 
-    const sortIncTodoList=()=>{
-        const sortedTodoList = [...todoList].sort((a, b) => a.text.localeCompare(b.text, 'vi', { sensitivity: 'base' }));
-        setTodoList(sortedTodoList);
+    const dispatch = useDispatch();
+
+
+    const sortIncTodoList = () => {
+        dispatch(sortIncTodoListReducers(categoryId));
     }
+
     const sortDecsTodoList = () => {
-        const sortedTodoList = [...todoList].sort((a, b) => b.text.localeCompare(a.text, 'vi', { sensitivity: 'base' }));
-        setTodoList(sortedTodoList);
+        dispatch(sortDecsTodoListReducers(categoryId));
+    }
+    const sortIncStatusTodoList = () => {
+        dispatch(sortIncStatusTodoListReducers(categoryId));
+    }
+    const sortDecsStatusTodoList = () => {
+        dispatch(sortDecsStatusTodoListReducers(categoryId));
     }
     return (
         <div className="action-buttons">
-            <button onClick={deleteSelectedItems} disabled={selectedItem.size === 0}>
+            <button onClick={deleteSelectedItems} disabled={selectedItem.length === 0}>
                 Xóa mục đã chọn
             </button>
             <div>
                 <button onClick={sortIncTodoList}>Tăng dần</button>
                 <button onClick={sortDecsTodoList}>Giảm dần</button>
+                <button onClick={sortIncStatusTodoList}>Tăng dần status</button>
+                <button onClick={sortDecsStatusTodoList}>Giảm dần status</button>
             </div>
         </div>
     );
