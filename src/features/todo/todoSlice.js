@@ -10,7 +10,6 @@ export const TodoSlice = createSlice({
     name: 'todos',
     initialState,
     reducers: {
-        // categories
         addCategoryReducers: (state, action) => {
             state.categories.push({ id: Date.now(), name: action.payload, todos: [] });
         },

@@ -4,7 +4,7 @@ export default function Login(){
     return(
         <>
         <LinkList/>
-        <h1>Đăng nhập mới đủ quyền</h1>
+        <h1>Need Login</h1>
         </>
     )
 }

@@ -5,7 +5,7 @@ export default function About(){
         <>
             <LinkList/>
             <h1>
-                About nè
+                About Page
             </h1>
         </>
     )

@@ -9,7 +9,7 @@ const AddToList = () => {
     const categories = useSelector(state => state.todos.categories);
 
     const [categoryName, setCategoryName] = useState('');
-
+    const [error,setError] = useState('');
     useEffect(() => {
         const savedTodos = JSON.parse(localStorage.getItem('categories'));
         if (savedTodos) {
@@ -27,6 +27,9 @@ const AddToList = () => {
         if (categoryName.trim()) {
             dispatch(addCategoryReducers(categoryName));
             setCategoryName('');
+            setError('');
+        }else{
+            setError('Category name cannot be empty!')
         }
     };
 
@@ -45,6 +48,8 @@ const AddToList = () => {
                     fullWidth
                     size="small"
                     sx={{ backgroundColor: "#f5f5f5" }}
+                    error={Boolean(error)}
+                    helperText={error}
                 />
                 <Button
                     variant="contained"

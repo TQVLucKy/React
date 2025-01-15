@@ -6,7 +6,7 @@ export default function BookPage(){
         <>
         <LinkList/>
         <div>
-            <h1>BookPage nè</h1>
+            <h1>Book Page</h1>
         </div>
         </>
     )

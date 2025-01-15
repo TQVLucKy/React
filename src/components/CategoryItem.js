@@ -51,7 +51,7 @@ const CategoryItem = ({ category }) => {
         dispatch(deleteSelectedItemsReducers(categoryData.id));
     };
     const toggleSelectedItem = (id, categoryId) => {
-        dispatch(toggleSelectedItemReducers({id, categoryId}));
+        dispatch(toggleSelectedItemReducers({ id, categoryId }));
 
     };
 
@@ -138,76 +138,79 @@ const CategoryItem = ({ category }) => {
                 {categoryData?.todos?.length === 0 ? (
                     <Typography variant="body1" color="textSecondary">No tasks available.</Typography>
                 ) : (
-                    <TableContainer sx={{ marginTop: 2 }}>
-                        <Table>
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell sx={{ textAlign: "center", fontWeight: "bold" }}>Select</TableCell>
-                                    <TableCell sx={{ textAlign: "center", fontWeight: "bold" }}>
-                                        <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
-                                            <Typography variant="body1" sx={{ marginRight: 1 }}>Task</Typography>
-                                            <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-                                                <Button onClick={() => sortIncTodoList(categoryData?.id)} sx={{ padding: 0 }}>
-                                                    <Typography variant="body2">▲</Typography>
-                                                </Button>
-                                                <Button onClick={() => sortDecsTodoList(categoryData?.id)} sx={{ padding: 0 }}>
-                                                    <Typography variant="body2">▼</Typography>
-                                                </Button>
+                    <>
+                        <TableContainer sx={{ marginTop: 2 }}>
+                            <Table>
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell sx={{ textAlign: "center", fontWeight: "bold" }}>Select</TableCell>
+                                        <TableCell sx={{ textAlign: "center", fontWeight: "bold" }}>
+                                            <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+                                                <Typography variant="body1" sx={{ marginRight: 1 }}>Task</Typography>
+                                                <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+                                                    <Button onClick={() => sortIncTodoList(categoryData?.id)} sx={{ padding: 0 }}>
+                                                        <Typography variant="body2">▲</Typography>
+                                                    </Button>
+                                                    <Button onClick={() => sortDecsTodoList(categoryData?.id)} sx={{ padding: 0 }}>
+                                                        <Typography variant="body2">▼</Typography>
+                                                    </Button>
+                                                </Box>
                                             </Box>
-                                        </Box>
-                                    </TableCell>
-                                    <TableCell sx={{ textAlign: "center", fontWeight: "bold" }}>
-                                        <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
-                                            <Typography variant="body1" sx={{ marginRight: 1 }}>Status</Typography>
-                                            <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-                                                <Button onClick={() => sortIncStatusTodoList(categoryData?.id)} sx={{ padding: 0 }}>
-                                                    <Typography variant="body2">▲</Typography>
-                                                </Button>
-                                                <Button onClick={() => sortDecsStatusTodoList(categoryData?.id)} sx={{ padding: 0 }}>
-                                                    <Typography variant="body2">▼</Typography>
-                                                </Button>
+                                        </TableCell>
+                                        <TableCell sx={{ textAlign: "center", fontWeight: "bold" }}>
+                                            <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+                                                <Typography variant="body1" sx={{ marginRight: 1 }}>Status</Typography>
+                                                <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+                                                    <Button onClick={() => sortIncStatusTodoList(categoryData?.id)} sx={{ padding: 0 }}>
+                                                        <Typography variant="body2">▲</Typography>
+                                                    </Button>
+                                                    <Button onClick={() => sortDecsStatusTodoList(categoryData?.id)} sx={{ padding: 0 }}>
+                                                        <Typography variant="body2">▼</Typography>
+                                                    </Button>
+                                                </Box>
                                             </Box>
-                                        </Box>
-                                    </TableCell>
-                                    <TableCell sx={{ textAlign: "center", fontWeight: "bold" }}>Action</TableCell>
-                                </TableRow>
-                            </TableHead>
+                                        </TableCell>
+                                        <TableCell sx={{ textAlign: "center", fontWeight: "bold" }}>Action</TableCell>
+                                    </TableRow>
+                                </TableHead>
 
-                            <TableBody>
-                                {categoryData?.todos?.map((item, index) => (
-                                    <TodoItem
-                                        key={item.id}
-                                        item={item}
-                                        categoryId={categoryData?.id}
-                                        index={index}
-                                        toggleComplited={toggleComplited}
-                                        toggleSelectedItem={toggleSelectedItem}
-                                        deleteItem={deleteItem}
-                                        save={save}
-                                        edit={edit}
-                                    />
-                                ))}
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
+                                <TableBody>
+                                    {categoryData?.todos?.map((item, index) => (
+                                        <TodoItem
+                                            key={item.id}
+                                            item={item}
+                                            categoryId={categoryData?.id}
+                                            index={index}
+                                            toggleComplited={toggleComplited}
+                                            toggleSelectedItem={toggleSelectedItem}
+                                            deleteItem={deleteItem}
+                                            save={save}
+                                            edit={edit}
+                                        />
+                                    ))}
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
+                        <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: 2 }}>
+                            <Button
+                                variant="contained"
+                                color="error"
+                                onClick={deleteSelectedItems}
+                                disabled={selectedItem.length === 0 || !selectedItem.some(item => item.categoryId === categoryData.id)}
+                                sx={{
+                                    padding: "8px 16px",
+                                    borderRadius: "8px",
+                                    '&:hover': {
+                                        backgroundColor: '#d32f2f',
+                                    }
+                                }}
+                            >
+                                Delete Selected Items
+                            </Button>
+                        </Box>
+                    </>
                 )}
-                <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: 2 }}>
-                    <Button
-                        variant="contained"
-                        color="error"
-                        onClick={deleteSelectedItems}
-                        disabled={selectedItem.length === 0 || !selectedItem.some(item => item.categoryId === categoryData.id)} 
-                        sx={{
-                            padding: "8px 16px",
-                            borderRadius: "8px",
-                            '&:hover': {
-                                backgroundColor: '#d32f2f',
-                            }
-                        }}
-                    >
-                        Delete Selected Items
-                    </Button>
-                </Box>
+
 
             </div>
         </Card>

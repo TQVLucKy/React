@@ -6,6 +6,7 @@ import LinkList from "./Link";
 const TodoItemDetail = () => {
     const { categoryId, todoId } = useParams(); 
     const [todo, setTodo] = useState(null); 
+    const [categoryName, setCategoryName] = useState(""); 
 
     useEffect(() => {
         const storeTodoList = localStorage.getItem('categories');
@@ -17,6 +18,7 @@ const TodoItemDetail = () => {
                 const category = parsedTodoList.find(item => item.id === Number(categoryId));
                 
                 if (category) {
+                    setCategoryName(category.name); 
                     const todoItem = category.todos.find(todo => todo.id === Number(todoId));
                     
                     if (todoItem) {
@@ -59,7 +61,7 @@ const TodoItemDetail = () => {
                 {todo ? (
                     <>
                         <Typography variant="h4" gutterBottom>
-                            Task Details
+                            {categoryName}
                         </Typography>
                         <Typography variant="body1" paragraph>
                             <strong>Text:</strong> {todo.text}

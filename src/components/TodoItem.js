@@ -18,7 +18,16 @@ const TodoItem = ({ item, categoryId, index, toggleComplited, toggleSelectedItem
     };
 
     const [newText, setNewText] = useState(item.text);
+    const [error, setError] = useState('');
 
+    const handleSave = () => {
+        if (newText.trim()) {
+            save(item.id, newText, categoryId);
+            setError('');
+        } else {
+            setError('Task name cannot be empty!');
+        }
+    };
     return (
         <TableRow key={item.id}>
             <TableCell>
@@ -36,14 +45,17 @@ const TodoItem = ({ item, categoryId, index, toggleComplited, toggleSelectedItem
                         variant="outlined"
                         size="small"
                         fullWidth
+                        error={Boolean(error)}
+                        helperText={error}
                     />
                 ) : (
-                    <Typography variant="body1" sx={{ fontSize: 16,
-                                                      overflow:'hidden',
-                                                      whiteSpace:'nowrap',
-                                                      textOverflow:'ellipsis',
-                                                      maxWidth:'250px'
-                     }}>
+                    <Typography variant="body1" sx={{
+                        fontSize: 16,
+                        overflow: 'hidden',
+                        whiteSpace: 'nowrap',
+                        textOverflow: 'ellipsis',
+                        maxWidth: '250px'
+                    }}>
                         {item.text}
                     </Typography>
                 )}
@@ -51,15 +63,20 @@ const TodoItem = ({ item, categoryId, index, toggleComplited, toggleSelectedItem
             <TableCell>
                 <Button
                     variant="outlined"
-                    color="primary"
+                    color={item.complited === 2 ? "success" : item.complited === 1 ? "warning" : "primary"} 
                     onClick={() => toggleComplited(index, categoryId)}
                     sx={{
                         textTransform: "none",
                         minWidth: "120px",
-                        "&:hover": { backgroundColor: "#1976d2", color: "white" }
-                    }}>
+                        "&:hover": {
+                            backgroundColor: item.complited === 2 ? "#388e3c" : item.complited === 1 ? "#ffa000" : "#1976d2",
+                            color: "white",
+                        },
+                    }}
+                >
                     {getComplitedText()}
                 </Button>
+
             </TableCell>
             <TableCell>
                 <Box display="flex" gap={1} justifyContent="center" alignItems="center">
@@ -67,7 +84,7 @@ const TodoItem = ({ item, categoryId, index, toggleComplited, toggleSelectedItem
                         <Button
                             variant="contained"
                             color="success"
-                            onClick={() => save(item.id, newText, categoryId)}
+                            onClick={handleSave}
                             sx={{
                                 padding: "6px 12px",
                                 borderRadius: "8px",

@@ -3,12 +3,16 @@ import { Button, TextField, Box } from '@mui/material';
 
 const AddTodo = ({ addtodo, id }) => {
   const [text, setText] = useState('');
+  const [error, setError] = useState(false);
 
   const handleAddClick = () => {
-    if (text.trim() !== '') {
-      addtodo(text, id);
-      setText('');
+    if (text.trim() === '') {
+      setError(true);
+      return;
     }
+    setError(false); 
+    addtodo(text, id);
+    setText('');
   };
 
   return (
@@ -20,7 +24,14 @@ const AddTodo = ({ addtodo, id }) => {
         onKeyDown={(e) => {
           if (e.key === 'Enter') handleAddClick();
         }}
-        onChange={(e) => setText(e.target.value)}
+        onChange={(e) => {
+          setText(e.target.value);
+          if (e.target.value.trim() !== '') {
+            setError(false); 
+          }
+        }}
+        error={error}
+        helperText={error ? 'Task cannot be empty' : ''} 
         fullWidth
       />
       <Button
